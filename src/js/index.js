@@ -1,2 +1,9 @@
 import styles from '../scss/styles.scss';
-console.log("hello world! v1");
+import React from "react";
+import ReactDOM from "react-dom";
+
+const Index = () => {
+    return <div>Hello React!</div>;
+  };
+  
+ReactDOM.render(<Index />, document.getElementById("index"));
