@@ -1,9 +1,19 @@
 import styles from '../scss/styles.scss';
-import React from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-const Index = () => {
-    return <div>Hello React!</div>;
-  };
-  
-ReactDOM.render(<Index />, document.getElementById("index"));
+class FormContainer extends Component {
+  constructor() {
+    super();
+    this.state = {
+      title: ""
+    };
+  }
+  render() {
+    return (
+      <form id="article-form">
+      </form>
+    );
+  }
+}
+export default FormContainer;

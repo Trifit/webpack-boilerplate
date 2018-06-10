@@ -1,11 +1,7 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-
-const htmlPlugin = new HtmlWebPackPlugin({
-    template: "./dist/index.html",
-    filename: "./index.html"
-  });
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const htmlWebPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'production',
@@ -19,6 +15,7 @@ module.exports = {
         filename: 'js/bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
+
     module: {
         rules: [{
             test: /\.scss$/,
@@ -35,12 +32,32 @@ module.exports = {
                         loader: "sass-loader" // compiles Sass to CSS
                     }
                 ]
-            })
+            }),
+        },{
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: "babel-loader"
+        },{ 
+            test: /\.jsx?$/,
+            exclude: /node_modules/,
+            use: [{
+                loader: 'babel-loader',
+                options: {
+                    presets: ['react']
+                }
+            }]
         }]
     }
-};
+}
 
 plugins: [
     new ExtractTextPlugin({filename:'app.bundle.css'}),
-    htmlPlugin
+    new htmlWebPlugin(),
+    new BrowserSyncPlugin({
+        // browse to http://localhost:3000/ during development,
+        // ./public directory is being served
+        host: 'localhost',
+        port: 3000,
+        server: { baseDir: ['dist'] }
+    })   
 ]
